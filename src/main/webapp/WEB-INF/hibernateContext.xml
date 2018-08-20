@@ -4,7 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="src/main/webapp/WEB-INF/hibernate.properties"/>
+    <context:property-placeholder location="WEB-INF/hibernate.properties"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
@@ -16,7 +16,12 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="annotatedClasses" value="shekhovtsov.maksym.domain.Person"/>
         <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" ref="${hibernate.config}"/>
+        <!--<property name="configLocation" ref="${hibernate.config}"/>-->
     </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 
 </beans>

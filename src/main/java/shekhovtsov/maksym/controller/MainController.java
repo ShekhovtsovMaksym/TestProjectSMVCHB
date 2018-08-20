@@ -1,19 +1,25 @@
 package shekhovtsov.maksym.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import shekhovtsov.maksym.domain.Person;
 import shekhovtsov.maksym.service.PersonService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-@RequestMapping("/main")
+@RestController
 public class MainController {
 
     protected static Logger logger = Logger.getLogger("controller");
@@ -21,26 +27,24 @@ public class MainController {
     @Resource(name = "personService")
     private PersonService personService;
 
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public String getPersons(Model model)
+    @GetMapping(value = "/persons", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Person>> getPersons()
     {
         logger.debug("mvc get persons");
 
         List<Person> persons = personService.getAll();
 
-        model.addAttribute("persons", persons);
-
-        return "personspage";
+        return new ResponseEntity<>(persons, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/persons/add", method = RequestMethod.GET)
-    public String getAdd(Model model)
+    @GetMapping(value = "/persons/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> getAdd(@PathVariable("id") int id)
     {
         logger.debug("get add");
 
-        model.addAttribute("personAttribute", new Person());
+        Person person = personService.get(id);
 
-        return "addpage";
+        return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/persons/add", method = RequestMethod.POST)

@@ -24,7 +24,7 @@ public class PersonService
     public List<Person> getAll()
     {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createSQLQuery("FROM Person");
+        Query query = session.createSQLQuery("SELECT * FROM PERSON");
 
         return (ArrayList) query.list();
     }
