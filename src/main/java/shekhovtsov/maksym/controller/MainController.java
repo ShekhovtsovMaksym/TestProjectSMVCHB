@@ -1,5 +1,6 @@
 package shekhovtsov.maksym.controller;
 
+import com.connecture.logging.exectime.LogExecutionTime;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import shekhovtsov.maksym.aop.Interface;
 import shekhovtsov.maksym.domain.Person;
 import shekhovtsov.maksym.service.PersonService;
 
@@ -30,6 +32,7 @@ public class MainController {
     @GetMapping(value = "/persons", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Person>> getPersons()
     {
+        testMethod();
         logger.debug("mvc get persons");
 
         List<Person> persons = personService.getAll();
@@ -57,5 +60,10 @@ public class MainController {
         return "addedpage";
     }
 
+    @Interface
+    public void testMethod()
+    {
+        System.out.println("lololo");
+    }
 
 }
