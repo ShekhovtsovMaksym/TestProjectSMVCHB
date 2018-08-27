@@ -12,8 +12,7 @@
 
     <context:component-scan base-package="shekhovtsov.maksym"/>
 
-
-    <!--<context:component-scan base-package="com.connecture.logging"/>-->
+    <context:component-scan base-package="com.connecture.logging"/>
 
 
     <!--<aop:config>-->
